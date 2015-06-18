@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="es" xml:lang="es"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:loadBundle basename="messages" var="msg" />
+
+    <f:view contentType="text/html" encoding="UTF-8">
+
+        <h:head>
+            <meta charset="utf-8" />
+            <meta name="Language" content="es" />
+            <meta name="Robots" content="index, follow" />
+            <meta name="MSSmartTagsPreventParsing" content="true" />
+            <meta name="author" content="Sebastián Salazar Molina / ExperTI" />
+            <meta name="keywords" content="${msg.metaKeywords}" />
+            <meta name="description" content="${msg.metaDescription}" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+            <!--<h:outputStylesheet library="valery" name="css/estilo.css" />-->
+
+            <title>${msg.titulo}</title>
+
+            <!--Import materialize.css-->
+            <h:outputStylesheet library="naveen" name="css/materialize.min.css" />
+            <h:outputStylesheet library="naveen" name="css/main.css" />
+
+            <h:outputScript library="naveen" name="js/jquery.nicescroll.min.js" />
+            <h:outputScript library="naveen" name="js/jquery.nicescroll.plus.js" />
+            <h:outputScript library="naveen" name="js/velocity.min.js" />
+            <h:outputScript library="naveen" name="skrollr.min.js" />
+            <h:outputScript library="naveen" name="jquery.scrolline.js" />
+            <h:outputScript library="naveen" name="js/modernizr.js" />
+            <h:outputScript library="naveen" name="js/materialize.min.js" />
+            <h:outputScript library="naveen" name="js/main.js" />
+        </h:head>
+
+        <h:body styleClass="cyan lighten-5">
+
+            <div class="preloader cyan container-fluid row">
+                <div class="white-text text-darken-4 xpretext"><h4>KCC</h4>
+                </div>
+                <div class="progress cyan lighten-2 xpreloading">
+                    <div class="indeterminate cyan darken-3"></div>
+                </div>
+
+            </div>
+
+            <header class="site-header">
+                <div class="navbar-fixed">
+                    <nav class="cyan darken-2 waves-effect waves-light">
+                        <div class="nav-wrapper">
+                            <div class="container">
+                                <a internal="#" href="index.php" class="brand-logo"><i class="mdi-communication-chat"></i> KCC</a>
+                                <!--
+                                <ul id="nav-mobile" class="right side-nav">
+                                    <li><a internal href="comun/">Docs</a>
+                                    </li>
+                                    <li><a internal href="comun/blog/">Blog</a>
+                                    </li>
+                                    <li><a internal href="comun/about/">About</a>
+                                    </li>
+                                    <li><a href="http://github.com/naveenshaji/" target="_blank">GitHub</a>
+                                    </li>
+                                </ul>
+                                -->
+                                <a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+
+            <a class="darken-2 scrollToTop btn-floating btn-large waves-effect waves-light cyan"><i class="mdi-hardware-keyboard-arrow-up"></i></a>
+            <div id="page-wrap">
+                <div id="main-content">
+                    <div id="guts">
+                        <div class="container">
+                            <div class="wrapper cyan-text text-darken-3">
+                                <div id="skrollr-body">
+                                    <div class="post">
+                                        <p:outputPanel>
+                                            <ui:insert name="contenido" />
+                                        </p:outputPanel>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </h:body>
+    </f:view>
+</html>
