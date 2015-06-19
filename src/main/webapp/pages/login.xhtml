@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/public.xhtml">
+        <ui:define name="contenido">
+
+            <h:form>
+                <p:panel header="${msg.bienvenido}">
+                    <p:panelGrid columns="3">
+                        <p:outputLabel for="username" value="${msg.usuario}" />
+                        <p:inputText id="username" value="#{loginBean.username}" converter="TrimConverter" />
+                        <p:message for="username" />
+
+                        <p:outputLabel for="password" value="${msg.password}" />
+                        <p:password id="password" value="#{loginBean.password}" converter="TrimConverter" />
+                        <p:message for="password" />
+                    </p:panelGrid>
+                    
+                    <p:commandButton ajax="false" value="${msg.enviar}" action="#{loginBean.doLogin}" />
+                    
+                    <p:separator />
+                    
+                    <p:messages autoUpdate="true" globalOnly="true" showDetail="false" showSummary="true" />
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

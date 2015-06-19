@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/main.xhtml">
+        <ui:define name="contenido">
+
+            <h:form id="inscForm">
+                <p:panel header="${msg.inscripcion}">
+
+                    <p:panelGrid id="panel" columns="3">
+                        <p:outputLabel for="usuario" value="${msg.usuario}" />
+                        <p:inputText id="usuario" value="#{inscripcionBean.usuario}" converter="TrimConverter" />
+                        <p:message for="usuario" />
+
+                        <p:outputLabel for="email" value="${msg.email}" />
+                        <p:inputText id="email" value="#{inscripcionBean.email}" converter="TrimConverter" />
+                        <p:message for="email" />
+                    </p:panelGrid>
+
+                    <br />
+
+                    <p:commandButton action="#{inscripcionBean.procesar}"
+                                     value="${msg.enviar}" update=":inscForm" />
+
+                    <br />
+
+                    <p:messages autoUpdate="true" globalOnly="true" showDetail="false" showSummary="true" />
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

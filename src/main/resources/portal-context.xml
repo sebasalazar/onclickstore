@@ -5,12 +5,16 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:cxf="http://cxf.apache.org/core"
        xmlns:jaxws="http://cxf.apache.org/jaxws"
-       xsi:schemaLocation="http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+                           http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
                            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
-                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
     <bean id="webappPlaceholderConfig"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -20,10 +24,12 @@
         <property name="locations">
             <list>
                 <value>classpath:portal.properties</value>
-                <value>file:${user.home}${file.separator}.ocs${file.separator}titulo.properties</value>
+                <value>file:${user.home}${file.separator}.ocs${file.separator}ocs.properties</value>
             </list>
         </property>
     </bean>
+    
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
     
     <context:annotation-config />    
     <context:component-scan base-package="cl.sebastian.oneclickstore" />
@@ -41,6 +47,71 @@
     <jaxws:client id="oneClickPaymentService"
                   serviceClass="com.transbank.webpayserver.webservices.OneClickPaymentService"
                   address="${oneclick.ws.endpoint}">
+        <jaxws:outInterceptors>
+            <ref bean="signOutRequestInterceptor"/>
+        </jaxws:outInterceptors>
+        <jaxws:inInterceptors>
+            <ref bean="signInRequestInterceptor"/>
+        </jaxws:inInterceptors>
     </jaxws:client>
+    
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus> 
+
+<bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor" id="signOutRequestInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="signaturePropFile" value="signatureOut.properties"/>
+                <entry key="user" value="importkey"/>
+                <entry key="action" value="Signature"/>
+                <entry key="passwordCallbackClass" value="cl.sebastian.oneclickstore.ws.security.ClientCallBack"/>
+                <entry key="signatureParts" value="{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor" id="signInRequestInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="signaturePropFile" value="signatureIn.properties"/>
+                <entry key="user" value="orange"/>
+                <entry key="action" value="Signature"/>
+                <entry key="passwordCallbackClass" value="cl.sebastian.oneclickstore.ws.security.ClientCallBack"/>
+                <entry key="signatureParts" value="{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- Spring Security -->
+    <!--
+    <security:http pattern="/resources/naveen/css/**" security="none" />
+    <security:http pattern="/resources/naveen/js/**" security="none" />
+    <security:http pattern="/resources/naveen/img/**" security="none" />
+    <security:http pattern="/error/**" security="none" />
+    <security:http pattern="/javax.faces.resource/**" security="none" />
+    <security:http pattern="/pages/login.jsf" security="none"  />
+    
+    <security:http use-expressions="true" auto-config="true">
+        <security:headers disabled="true"/>
+        <security:csrf disabled="true" /> 
+
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()" />
+        <security:logout logout-url="/logout" logout-success-url="/login.jsf" />
+
+        <security:form-login login-page="/pages/login.jsf" 
+                             login-processing-url="/login"
+                             authentication-failure-url="/pages/login.jsf" 
+                             default-target-url="/pages/index.jsf" 
+                             always-use-default-target="true" />
+    </security:http>
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="proveedorAutenticacion" />
+    </security:authentication-manager>
+    -->
 
 </beans>

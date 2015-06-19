@@ -54,7 +54,7 @@
                     <nav class="cyan darken-2 waves-effect waves-light">
                         <div class="nav-wrapper">
                             <div class="container">
-                                <a internal="#" href="index.php" class="brand-logo">KCC</a>
+                                <a internal="#" href="index.php" class="brand-logo"><i class="mdi-communication-chat"></i> KCC</a>
                                 <!--
                                 <ul id="nav-mobile" class="right side-nav">
                                     <li><a internal href="comun/">Docs</a>
@@ -83,12 +83,6 @@
                                 <div id="skrollr-body">
                                     <div class="post">
                                         <p:outputPanel style="padding: 25px;">
-                                            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-                                            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" 
-                                                      showHeader="true" header="${msg.procesando}">
-                                                <p:graphicImage library="naveen" name="img/ajaxloadingbar.gif" />
-                                            </p:dialog>
-
                                             <ui:insert name="contenido" />
                                         </p:outputPanel>
                                     </div>

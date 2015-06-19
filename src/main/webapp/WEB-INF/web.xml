@@ -94,6 +94,19 @@
     -->
     <!-- Fin Sesion Hibernate -->    
     
+    <!-- Spring Security -->
+    <!--
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    -->
     
     <!-- Filtro Primefaces -->
     <filter>
@@ -122,35 +135,5 @@
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/index.jsp</location>
-    </error-page>
-    
-    <!-- No autorizado -->
-    <error-page>
-        <error-code>401</error-code>
-        <location>/error/deny.jsf</location>
-    </error-page>
-    
-    <!-- Prohibido -->
-    <error-page>
-        <error-code>403</error-code>
-        <location>/error/deny.jsf</location>
-    </error-page>
-    
-    <!-- No encontrado -->
-    <error-page>
-        <error-code>404</error-code>
-        <location>/error/notfound.jsf</location>
-    </error-page>
-    
-    <!-- Error interno -->
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error/error.jsf</location>
-    </error-page>
-    
-    <!-- Servicio no disponible -->
-    <error-page>
-        <error-code>503</error-code>
-        <location>/error/error.jsf</location>
     </error-page>
 </web-app>
