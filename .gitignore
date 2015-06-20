@@ -6,3 +6,7 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
+/cert/client.jks
+/cert/597020000999.crt
+/cert/comercio.jks
+/cert/importkey.jks
