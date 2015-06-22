@@ -10,6 +10,7 @@ public class Usuario extends BaseBean {
     private String userName = null;
     private String token = null;
     private String email = null;
+    private String urlWebpay = null;
 
     public String getTbkUser() {
         return tbkUser;
@@ -41,6 +42,14 @@ public class Usuario extends BaseBean {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUrlWebpay() {
+        return urlWebpay;
+    }
+
+    public void setUrlWebpay(String urlWebpay) {
+        this.urlWebpay = urlWebpay;
     }
 
     @Override

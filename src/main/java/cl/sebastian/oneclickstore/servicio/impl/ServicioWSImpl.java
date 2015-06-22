@@ -26,21 +26,19 @@ import org.springframework.stereotype.Service;
 @Service("servicioWS")
 public class ServicioWSImpl implements ServicioWS, Serializable {
 
-    @Value("${pagina.respuesta}")
-    private String paginaRespuesta;
     @Resource(name = "oneClickPaymentService")
     private OneClickPaymentService oneClickPaymentService;
     private static final Logger logger = LoggerFactory.getLogger(ServicioWSImpl.class);
 
     @Override
-    public Usuario inscribir(String usuario, String email) {
+    public Usuario inscribir(String usuario, String email, String pagina) {
         Usuario usrOneClick = null;
         try {
             if (StringUtils.isNotBlank(usuario) && StringUtils.isNotBlank(email)) {
                 OneClickInscriptionInput entrada = new OneClickInscriptionInput();
                 entrada.setUsername(usuario);
                 entrada.setEmail(email);
-                entrada.setResponseURL(paginaRespuesta);
+                entrada.setResponseURL(pagina);
 
                 OneClickInscriptionOutput salida = oneClickPaymentService.initInscription(entrada);
                 if (salida != null) {
@@ -49,6 +47,7 @@ public class ServicioWSImpl implements ServicioWS, Serializable {
                     usrOneClick.setUserName(usuario);
                     usrOneClick.setEmail(email);
                     usrOneClick.setToken(salida.getToken());
+                    usrOneClick.setUrlWebpay(salida.getUrlWebpay());
                 }
 
             } else {

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  */
 public interface ServicioWS {
 
-    public Usuario inscribir(String usuario, String email);
+    public Usuario inscribir(String usuario, String email, String pagina);
 
     public boolean pagar(String usuario, Long ordenCompra, String usuarioTbk, BigDecimal monto);
 
