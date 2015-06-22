@@ -32,10 +32,11 @@ public class InscripcionBean implements Serializable {
     public String procesar() {
         String accion = StringUtils.EMPTY;
         try {
-            Usuario usuarioOC = servicioWS.inscribir(usuario, email);
+            String paginaRespuesta = String.format("%s/pages/exito.jsf", FacesUtils.getAppUrl());
+            Usuario usuarioOC = servicioWS.inscribir(usuario, email, paginaRespuesta);
             if (usuarioOC != null) {
-                sesionBean.agregarUsuario(usuarioOC);
-                accion = "respuesta";
+                sesionBean.setUsuario(usuarioOC);
+                accion = "formulario";
             } else {
                 FacesUtils.error("No fue posible inscribir su solicitud");
             }

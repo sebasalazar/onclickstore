@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 @Qualifier("sesionBean")
 public class SesionBean implements Serializable {
 
+    private Usuario usuario = null;
     private List<Usuario> pendientes = null;
     private final static Logger logger = LoggerFactory.getLogger(SesionBean.class);
 
@@ -55,6 +56,7 @@ public class SesionBean implements Serializable {
         boolean ok = false;
         try {
             if (usuario != null) {
+                this.usuario = usuario;
                 if (!existeUsuarios(usuario)) {
                     pendientes.add(usuario);
                     ok = true;
@@ -65,6 +67,14 @@ public class SesionBean implements Serializable {
             FacesUtils.error("No es posible agregar al usuario a la lista de usuarios pendientes");
         }
         return ok;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<Usuario> getPendientes() {

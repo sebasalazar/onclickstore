@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/main.xhtml">
+        <ui:define name="contenido">
+
+            <p:panel header="${msg.eliminar}">
+                <h:form>
+                    <p:panelGrid columns="3">
+
+                        <p:outputLabel for="usuario" value="${msg.usuario}" />
+                        <p:inputText id="usuario" value="#{eliminarBean.nombreUsuario}" required="true" />
+                        <p:message for="usuario" />
+
+                        <p:outputLabel for="tbk" value="${msg.usuarioTBK}" />
+                        <p:inputText id="tbk" value="#{eliminarBean.usuarioTbk}" />
+                        <p:message for="tbk" />
+                    </p:panelGrid>
+
+                    <p:commandButton action="#{eliminarBean.procesar}"
+                                     value="${msg.enviar}" update=":mensajes" />
+                </h:form>
+            </p:panel>
+
+            <p:outputPanel id="mensajes">
+                <p:messages globalOnly="true" showDetail="false" showSummary="true" />
+            </p:outputPanel>
+
+        </ui:define>
+    </ui:composition>
+</html>

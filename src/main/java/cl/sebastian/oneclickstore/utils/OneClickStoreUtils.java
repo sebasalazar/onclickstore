@@ -1,7 +1,9 @@
 package cl.sebastian.oneclickstore.utils;
 
 import java.io.Serializable;
+import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +23,7 @@ public class OneClickStoreUtils implements Serializable {
     public static Long crearOrdenCompra() {
         Long oc = null;
         try {
-            String randomNumeric = RandomStringUtils.randomNumeric(15);
-            oc = NumberUtils.createLong(randomNumeric);
+            oc = RandomUtils.nextLong(0L, 9999999L);
         } catch (Exception e) {
             oc = null;
             logger.error("Error al crear orden de compra: {}", e.toString());

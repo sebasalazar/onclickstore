@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/main.xhtml">
+        <ui:define name="contenido">
+
+            <p:outputPanel rendered="#{formularioBean.mostrar}">
+
+                <script type="text/javascript">
+                    jQuery(document).ready(function () {
+                        jQuery('#formulario').submit();
+                    });
+                </script>
+
+                <form id="formulario" action="#{formularioBean.usuario.urlWebpay}" method="post">
+                    <input type="hidden" name="TBK_TOKEN" value="#{formularioBean.usuario.token}" />
+                </form>
+            </p:outputPanel>
+
+        </ui:define>
+    </ui:composition>
+</html>

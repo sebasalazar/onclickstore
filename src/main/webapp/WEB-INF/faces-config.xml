@@ -25,10 +25,10 @@
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>respuesta</from-view-id>
+        <from-view-id>*</from-view-id>
         <navigation-case>
-            <from-outcome>inscripcion</from-outcome>
-            <to-view-id>/pages/respuesta.jsf</to-view-id>
+            <from-outcome>formulario</from-outcome>
+            <to-view-id>/pages/formulario.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

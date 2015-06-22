@@ -2,6 +2,8 @@ package cl.sebastian.oneclickstore.servicio.impl;
 
 import cl.sebastian.oneclickstore.modelo.Usuario;
 import cl.sebastian.oneclickstore.servicio.ServicioWS;
+import com.transbank.webpayserver.webservices.OneClickFinishInscriptionInput;
+import com.transbank.webpayserver.webservices.OneClickFinishInscriptionOutput;
 import com.transbank.webpayserver.webservices.OneClickInscriptionInput;
 import com.transbank.webpayserver.webservices.OneClickInscriptionOutput;
 import com.transbank.webpayserver.webservices.OneClickPayInput;
@@ -16,7 +18,6 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -59,6 +60,32 @@ public class ServicioWSImpl implements ServicioWS, Serializable {
             logger.debug("Error al crear inscripción one click: {}", e.toString(), e);
         }
         return usrOneClick;
+    }
+
+    @Override
+    public String finalizarInscripcion(String token) {
+        String usuarioTbk = StringUtils.EMPTY;
+        try {
+            if (StringUtils.isNotBlank(token)) {
+                OneClickFinishInscriptionInput entrada = new OneClickFinishInscriptionInput();
+                entrada.setToken(token);
+                OneClickFinishInscriptionOutput salida = oneClickPaymentService.finishInscription(entrada);
+                if (salida.getResponseCode() == 0) {
+                    usuarioTbk = salida.getTbkUser();
+                }
+                
+                logger.debug("Código Autorización: '{}'", salida.getAuthCode());
+                logger.debug("Tipo tarjeta: '{}'", salida.getCreditCardType());
+                logger.debug("Últimos dígitos tarjeta: '{}'", salida.getLast4CardDigits());
+                logger.debug("Respuesta: '{}'", salida.getResponseCode());
+                logger.debug("Usuario TBK: '{}'", salida.getTbkUser());
+            }
+        } catch (Exception e) {
+            usuarioTbk = StringUtils.EMPTY;
+            logger.error("Error al finalizar Inscripción: {}", e.toString());
+            logger.debug("Error al finalizar Inscripción: {}", e.toString(), e);
+        }
+        return usuarioTbk;
     }
 
     @Override
@@ -107,21 +134,24 @@ public class ServicioWSImpl implements ServicioWS, Serializable {
     }
 
     @Override
-    public boolean reversaConCodigo(Long ordenCompra) {
-        boolean ok = false;
+    public Long reversaConCodigo(Long ordenCompra) {
+        Long codigo = null;
         try {
             if (ordenCompra != null) {
                 OneClickReverseInput input = new OneClickReverseInput();
                 input.setBuyorder(ordenCompra);
                 OneClickReverseOutput output = oneClickPaymentService.codeReverseOneClick(input);
-                ok = output.isReversed();
+                boolean ok = output.isReversed();
+                if (ok) {
+                    codigo = output.getReverseCode();
+                }
             }
         } catch (Exception e) {
-            ok = false;
+            codigo = null;
             logger.error("Error al reversar: {}", e.toString());
             logger.debug("Error al reversar: {}", e.toString(), e);
         }
-        return ok;
+        return codigo;
     }
 
     @Override
@@ -141,5 +171,4 @@ public class ServicioWSImpl implements ServicioWS, Serializable {
         }
         return ok;
     }
-
 }

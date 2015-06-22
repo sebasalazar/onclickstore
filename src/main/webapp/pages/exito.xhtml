@@ -6,8 +6,14 @@
 
     <ui:composition template="/templates/main.xhtml">
         <ui:define name="contenido">
+
+            <p:outputPanel rendered="#{exitoBean.mostrar}">
+                <p:panel header="${msg.exito}">
+                    <h:outputText value="${msg.mensajeExito}" />
+                </p:panel>
+            </p:outputPanel>
             
-            <h:outputText value="Respuesta" />
+            <p:messages globalOnly="true" showDetail="false" showSummary="true" />
             
         </ui:define>
     </ui:composition>
